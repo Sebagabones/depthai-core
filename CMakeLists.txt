@@ -558,14 +558,14 @@ if(DEPTHAI_HAVE_PCL_SUPPORT AND DEPTHAI_MERGED_TARGET)
     # Specify that we are building target pcl
     target_compile_definitions(${TARGET_CORE_NAME} PUBLIC DEPTHAI_TARGET_PCL)
     target_compile_definitions(${TARGET_CORE_NAME} PUBLIC DEPTHAI_HAVE_PCL_SUPPORT)
-    target_link_directories(${TARGET_CORE_NAME} PUBLIC 
+    target_link_directories(${TARGET_CORE_NAME} PUBLIC
         $<BUILD_INTERFACE:${PCL_LIBRARY_DIRS}>
         $<INSTALL_INTERFACE:include>
     )
     target_compile_definitions(${TARGET_CORE_NAME} PUBLIC ${PCL_DEFINITIONS})
 endif()
 
-if(DEPTHAI_HAVE_RTABMAP_SUPPORT AND DEPTHAI_MERGED_TARGET) 
+if(DEPTHAI_HAVE_RTABMAP_SUPPORT AND DEPTHAI_MERGED_TARGET)
     # Link to rtabmap
     target_link_libraries(${TARGET_CORE_NAME} PRIVATE rtabmap::core ${THIRDPARTY_RTABMAP_LIBRARIES})
 
@@ -999,8 +999,7 @@ endif()
 ########################
 # RTABMap Support 2
 ########################
-if(DEPTHAI_HAVE_RTABMAP_SUPPORT AND NOT DEPTHAI_MERGED_TARGET)
-    if(NOT APPLE)
+if(DEPTHAI_HAVE_RTABMAP_SUPPORT AND NOT DEPTHAI_MERGED_TARGET)if(NOT APPLE)
         SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
     endif()
     # Add depthai-rtabmap library and depthai::rtabmap alias
