@@ -27,13 +27,13 @@ if(WIN32)
         VERBATIM
         COMMAND_EXPAND_LISTS
     )
-else()
-    add_custom_target(install_requirements ALL
-        COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_LIST_DIR}/install_requirements.py" "--skip_depthai" "--install_rerun" "--install_open3d_cpu"
-        DEPENDS ${TARGET_NAME}
-        VERBATIM
-        COMMAND_EXPAND_LISTS
-    )
+# else()
+#     add_custom_target(install_requirements ALL
+#         COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_LIST_DIR}/install_requirements.py" "--skip_depthai" "--install_rerun" "--install_open3d_cpu"
+#         DEPENDS ${TARGET_NAME}
+#         VERBATIM
+#         COMMAND_EXPAND_LISTS
+#     )
 endif()
 
 # Function for adding new python test
