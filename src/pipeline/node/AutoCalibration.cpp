@@ -17,8 +17,8 @@ constexpr int PACKET_SIZE_DEFAULT = 100000;
 
 void AutoCalibration::logReport(const Report& report, unsigned int iteration) const {
     // Define a lambda or a small helper to route to the correct spdlog method
-    auto log = [&](const std::string& fmt, auto&&... args) { logger->info(fmt, args...); };
-
+    // auto log = [&](const std::string& fmt, auto&&... args) { logger->info(fmt, args...); };
+    auto log = [&](const std::string& fmt, auto&&... args) { logger->info(fmt::runtime(fmt), std::forward<decltype(args)>(args)...); };
     log("====== AutoCalibration iteration {} / {} ========", iteration, initialConfig->maxIterations);
     log("Iteration time:         {:.2f}s", report.elapsedSeconds);
     log("dataConfidence          {:.4f}     {:.2f}", report.dataConfidence, initialConfig->dataConfidenceThreshold);
@@ -54,8 +54,8 @@ void AutoCalibration::logReport(const Report& report, unsigned int iteration) co
 }
 
 void AutoCalibration::logConfig() const {
-    auto log = [&](const std::string& fmt, auto&&... args) { logger->info(fmt, args...); };
-
+    // auto log = [&](const std::string& fmt, auto&&... args) { logger->info(fmt, args...); };
+    auto log = [&](const std::string& fmt, auto&&... args) { logger->info(fmt::runtime(fmt), std::forward<decltype(args)>(args)...); };
     log("====== AutoCalibration Configuration ======");
     log("Mode:                   {}", initialConfig->mode == AutoCalibrationConfig::CONTINUOUS ? "CONTINUOUS" : "ON_START");
     log("Sleeping Time:          {}s", initialConfig->sleepingTime);
