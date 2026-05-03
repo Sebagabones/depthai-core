@@ -219,31 +219,27 @@ if(DEPTHAI_DEPENDENCY_INCLUDE)
 endif()
 
 if(DEPTHAI_DYNAMIC_CALIBRATION_SUPPORT)
-    set(DEPTHAI_DYNAMIC_CALIBRATION_PATH "" CACHE FILEPATH "Override path to local dynamic_calibration .zip file")
-
-    if(DEPTHAI_DYNAMIC_CALIBRATION_PATH AND EXISTS "${DEPTHAI_DYNAMIC_CALIBRATION_PATH}")
-        message(STATUS "Using local dynamic_calibration zip: ${DEPTHAI_DYNAMIC_CALIBRATION_PATH}")
-        FetchContent_Declare(
-            dynamic_calibration
-            URL "file://${DEPTHAI_DYNAMIC_CALIBRATION_PATH}"
-        )
+    if(NOT DEPTHAI_ENABLE_REMOTE_CONNECTION)
+        set(DYNAMIC_CALIBRATION_DIR "${DEPTHAI_DYNAMIC_CALIBRATION_LOCAL_DIR}")
+        message(STATUS "Using local dynamic_calibration from ${DYNAMIC_CALIBRATION_DIR}")
     else()
-        include(Depthai/DepthaiDynamicCalibrationConfig)
-        include(PlatformParsing)
-        detect_platform_arch(DEPTHAI_HOST_PLATFORM_ARCH)
-        message(STATUS "Platform architecture: ${DEPTHAI_HOST_PLATFORM_ARCH}")
-        # TODO - Add URL_HASH
-        message(STATUS "Using remote dynamic_calibration zip")
-        FetchContent_Declare(
-            dynamic_calibration
-            URL "https://artifacts.luxonis.com/artifactory/luxonis-depthai-helper-binaries/dynamic_calibration/${DEPTHAI_DYNAMIC_CALIBRATION_VERSION}/dynamic_calibration_${DEPTHAI_DYNAMIC_CALIBRATION_VERSION}_${DEPTHAI_HOST_PLATFORM_ARCH}.zip"
-        )
+        set(DEPTHAI_DYNAMIC_CALIBRATION_PATH "" CACHE FILEPATH "Override path to local dynamic_calibration .zip file")
+
+        if(DEPTHAI_DYNAMIC_CALIBRATION_PATH AND EXISTS "${DEPTHAI_DYNAMIC_CALIBRATION_PATH}")
+            FetchContent_Declare(dynamic_calibration URL "file://${DEPTHAI_DYNAMIC_CALIBRATION_PATH}")
+        else()
+            include(Depthai/DepthaiDynamicCalibrationConfig)
+            include(PlatformParsing)
+            detect_platform_arch(DEPTHAI_HOST_PLATFORM_ARCH)
+            FetchContent_Declare(
+                dynamic_calibration
+                URL "https://artifacts.luxonis.com/artifactory/luxonis-depthai-helper-binaries/dynamic_calibration/${DEPTHAI_DYNAMIC_CALIBRATION_VERSION}/dynamic_calibration_${DEPTHAI_DYNAMIC_CALIBRATION_VERSION}_${DEPTHAI_HOST_PLATFORM_ARCH}.zip"
+            )
+        endif()
+
+        FetchContent_MakeAvailable(dynamic_calibration)
+        set(DYNAMIC_CALIBRATION_DIR ${dynamic_calibration_SOURCE_DIR})
     endif()
-
-    FetchContent_MakeAvailable(dynamic_calibration)
-    message(STATUS "Dynamic calibration extracted to ${dynamic_calibration_SOURCE_DIR}")
-    set(DYNAMIC_CALIBRATION_DIR ${dynamic_calibration_SOURCE_DIR})
-
     if(WIN32)
         # On Windows, find both .lib (import libraries) and .dll (runtime libraries)
         # Search for the import libraries (.lib files)

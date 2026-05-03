@@ -606,14 +606,14 @@ if(DEPTHAI_HAVE_PCL_SUPPORT AND DEPTHAI_MERGED_TARGET)
     # Specify that we are building target pcl
     target_compile_definitions(${TARGET_CORE_NAME} PUBLIC DEPTHAI_TARGET_PCL)
     target_compile_definitions(${TARGET_CORE_NAME} PUBLIC DEPTHAI_HAVE_PCL_SUPPORT)
-    target_link_directories(${TARGET_CORE_NAME} PUBLIC 
+    target_link_directories(${TARGET_CORE_NAME} PUBLIC
         $<BUILD_INTERFACE:${PCL_LIBRARY_DIRS}>
         $<INSTALL_INTERFACE:include>
     )
     target_compile_definitions(${TARGET_CORE_NAME} PUBLIC ${PCL_DEFINITIONS})
 endif()
 
-if(DEPTHAI_HAVE_RTABMAP_SUPPORT AND DEPTHAI_MERGED_TARGET) 
+if(DEPTHAI_HAVE_RTABMAP_SUPPORT AND DEPTHAI_MERGED_TARGET)
     # Link to rtabmap
     target_link_libraries(${TARGET_CORE_NAME} PRIVATE rtabmap::core ${THIRDPARTY_RTABMAP_LIBRARIES})
 
@@ -1060,7 +1060,7 @@ if(DEPTHAI_HAVE_RTABMAP_SUPPORT AND NOT DEPTHAI_MERGED_TARGET)
     # Add depthai-rtabmap library and depthai::rtabmap alias
     add_library(${TARGET_RTABMAP_NAME}
     src/rtabmap/RTABMapConversions.cpp
-    src/rtabmap/RTABMapVIO.cpp 
+    src/rtabmap/RTABMapVIO.cpp
     src/rtabmap/RTABMapSLAM.cpp
     )
     add_library("${PROJECT_NAME}::${TARGET_RTABMAP_ALIAS}" ALIAS ${TARGET_RTABMAP_NAME})
