@@ -146,7 +146,7 @@ std::tuple<bool, DeviceInfo> DeviceBase::getAnyAvailableDevice(std::chrono::mill
     std::unordered_map<std::string, DeviceInfo> invalidDevices;
     bool first = true;
     do {
-        int timeoutMs = XLINK_DEVICE_DEFAULT_SEARCH_TIMEOUT_MS;
+        int timeoutMs = 500;
         if(first) {
             timeoutMs = DEVICE_SEARCH_FIRST_TIMEOUT_MS;  // for the first iteraton, have a shorter timeout
             first = false;
