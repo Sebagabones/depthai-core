@@ -62,7 +62,7 @@ class XLinkConnection {
      */
     static std::vector<DeviceInfo> getAllConnectedDevices(XLinkDeviceState_t state = X_LINK_ANY_STATE,
                                                           bool skipInvalidDevices = true,
-                                                          int timeoutMs = XLINK_DEVICE_DEFAULT_SEARCH_TIMEOUT_MS);
+                                                          int timeoutMs = 500);
 
     /**
      * Returns information of first device with given state
