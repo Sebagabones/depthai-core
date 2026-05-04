@@ -999,7 +999,8 @@ endif()
 ########################
 # RTABMap Support 2
 ########################
-if(DEPTHAI_HAVE_RTABMAP_SUPPORT AND NOT DEPTHAI_MERGED_TARGET)if(NOT APPLE)
+if(DEPTHAI_HAVE_RTABMAP_SUPPORT AND NOT DEPTHAI_MERGED_TARGET)
+    if(NOT APPLE)
         SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
     endif()
     # Add depthai-rtabmap library and depthai::rtabmap alias
@@ -1300,5 +1301,5 @@ if(DEPTHAI_INSTALL)
 
 endif()
 if(ament_cmake_FOUND)
-    ament_package() 
+    ament_package()
 endif()
